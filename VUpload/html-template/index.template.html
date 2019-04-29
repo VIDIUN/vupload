@@ -1,0 +1,462 @@
+<!-- saved from url=(0014)about:internet -->
+<html lang="en">
+
+<!--
+Smart developers always View Source.
+
+This application was built using Adobe Flex, an open source framework
+for building rich Internet applications that get delivered via the
+Flash Player or to desktops via Adobe AIR.
+
+Learn more about Flex at http://flex.org
+// -->
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<!--  BEGIN Browser History required section -->
+<link rel="stylesheet" type="text/css" href="history/history.css" />
+<!--  END Browser History required section -->
+
+<title>${title}</title>
+<script src="AC_OETags.js" language="javascript"></script>
+
+<!--  BEGIN Browser History required section -->
+<script src="history/history.js" language="javascript"></script>
+<!--  END Browser History required section -->
+
+<style>
+	body { margin: 0px; overflow:hidden }
+	#flashContainer{ position:relative; }
+		#flashContainer span{ color:#333; font-size:16px; }
+		object, embed{ position:absolute; top:0; left:0; z-index:999;}
+</style>
+<script language="JavaScript" type="text/javascript">
+<!--
+// -----------------------------------------------------------------------------
+// Globals
+// Major version of Flash required
+var requiredMajorVersion = ${version_major};
+// Minor version of Flash required
+var requiredMinorVersion = ${version_minor};
+// Minor version of Flash required
+var requiredRevision = ${version_revision};
+// -----------------------------------------------------------------------------
+// -->
+
+	var app;
+	var delegate = {};
+
+	//VUploader callbacks
+	delegate.readyHandler = function()
+	{
+		app = document.getElementById("uploader");
+	}
+	delegate.errorHandler = function(args)
+	{
+		log("errorHandler : "+args);
+		alert("errorHandler : "+args+" Selected files will be removed, please re-select");
+	}
+
+	delegate.selectHandler = function()
+	{ 
+		log("selectHandler. Total size: "+app.getTotalSize());
+		log("focus out of flash - use JS to take focus to upload button ");
+		setTimeout(function(){
+			var uploadBt = document.getElementById("uploadBtn");
+			uploadBt.focus();
+		}, 17);
+		
+	}
+	
+
+	delegate.singleUploadCompleteHandler = function(args)
+	{
+		log("singleUploadCompleteHandler: >> " +  args[0].title);
+	}
+
+	delegate.allUploadsCompleteHandler = function()
+	{
+		log("allUploadsCompleteHandler");
+	}
+
+	delegate.entriesAddedHandler = function(entries)
+	{
+		var addedEntries = "";
+		for (var i=0; i<entries.length; i++){
+			log("entriesAddedHandler: "+ entries[i].entryId);
+			addedEntries += entries[i].entryId + ",";
+		}
+	}
+	
+	delegate.addEntryFailedHandler = function()
+	{
+		log("addEntryFailedHandler");
+		
+	}
+
+	delegate.progressHandler = function(args)
+	{
+		log(args[2].title + ": " + args[0] + " / " + args[1]);
+	}
+
+	delegate.uiConfErrorHandler = function()
+	{
+		alert("ui conf loading error");
+	}
+
+	//VUplaoder API calls
+
+	function upload()
+	{
+		log("upload button clicked");
+		app.upload();
+	}
+
+	function setTags(tags, startIndex, endIndex)
+	{
+		app.setTags(tags, startIndex, endIndex);
+	}
+
+	function addTags(tags, startIndex, endIndex)
+	{
+		app.addTags(tags, startIndex, endIndex);
+	}
+	function setTitle(title, startIndex, endIndex)
+	{
+		app.setTitle(title, startIndex, endIndex);
+	}
+
+	function getFiles()
+	{
+		var files = app.getFiles();
+		var filesList = "";
+		for (var i=0; i<files.length; i++)
+			filesList += files[i] + ",";
+		log("got files : " + filesList);
+	}
+
+	function addEntries()
+	{
+		app.addEntries();
+	}
+
+	function stopUploads()
+	{
+		app.stopUploads();
+	}
+
+	function setMaxUploads(value)
+	{
+		app.setMaxUploads(value);
+	}
+
+	function browse()
+	{
+		app.browse();
+	}
+
+	function setPartnerData(value)
+	{
+		app.setPartnerData(value);
+	}
+
+	//End of VUploder API calls
+	//--------------------------------------------------------------------
+
+	function setMediaType()
+	{
+		var mediaType = mediaTypeInput.value;
+		app.setMediaType(mediaType);
+	}
+
+	function addTagsFromForm()
+	{
+		var tags = document.getElementById("tagsInput").value.split(",");
+		var startIndex = parseInt(tagsStartIndex.value);
+		var endIndex = parseInt(tagsEndIndex.value);
+		addTags(tags, startIndex, endIndex);
+	}
+
+	function setTagsFromForm()
+	{
+		var tags = document.getElementById("tagsInput").value.split(",");
+		var startIndex = parseInt(tagsStartIndex.value);
+		var endIndex = parseInt(tagsEndIndex.value);
+		setTags(tags, startIndex, endIndex);
+	}
+
+	function setTitleFromForm()
+	{
+		var startIndex = parseInt(titleStartIndex.value);
+		var endIndex = parseInt(titleEndIndex.value);
+		setTitle(titleInput.value, startIndex, endIndex);
+	}
+
+	function removeFilesFromForm()
+	{
+		var startIndex = parseInt(removeStartIndex.value);
+		var endIndex = parseInt(removeEndIndex.value);
+		app.removeFiles(startIndex, endIndex)
+		log(app.getTotalSize());
+	}
+
+	function setGroupId(value)
+	{
+		app.setGroupId(value);
+	}
+
+	function setPermissions(value)
+	{
+		app.setPermissions(value);
+	}
+
+	function setSiteUrl(value)
+	{
+		app.setSiteUrl(value);
+	}
+
+	function setScreenName(value)
+	{
+		app.setScreenName(value);
+	}
+	
+	function getError() {
+		error = app.getError();
+		log(error);
+	}
+	
+	function getErrorIndices() {
+		indices = app.getSelectedErrorIndices();
+		log(indices);
+	}
+
+
+
+	var tagsInput;
+	var tagsStartIndex;
+	var tagsEndIndex;
+
+	var titleInput;
+	var titleStartIndex;
+	var titleEndIndex;
+
+	var removeStartIndex;
+	var removeEndIndex;
+	var maxUploadsInput;
+
+	var partnerDataInput;
+
+	var groupId;
+	var permissions;
+	var screenName;
+	var siteUrl;
+
+
+
+	function log(a)
+	{
+		document.getElementById("log").innerHTML+="\n >> "+a;
+	}
+
+	function onLoadHandler()
+	{
+		tagsInput = document.getElementById("tagsInput");
+		tagsStartIndex = document.getElementById("tagsStartIndex");
+		tagsEndIndex = document.getElementById("tagsEndIndex");
+
+		titleInput = document.getElementById("titleInput");
+		titleStartIndex = document.getElementById("titleStartIndex");
+		titleEndIndex = document.getElementById("titleEndIndex");
+
+		removeStartIndex = document.getElementById("removeStartIndex");;
+		removeEndIndex = document.getElementById("removeEndIndex");
+
+		maxUploadsInput = document.getElementById("maxUploadsInput");
+		partnerDataInput = document.getElementById("partnerDataInput");
+
+		groupId = document.getElementById("groupId");
+		permissions = document.getElementById("permissions");
+		screenName = document.getElementById("screenName");
+		siteUrl = document.getElementById("siteUrl");
+	}
+	
+	
+	function focus2Flash()
+	{
+			setTimeout(OnFocusIn1, 100);
+			log('focus into flash. hit space to browse your PC');
+	}
+	
+	function flashShiftTabOut(){
+		log('focus out of flash by shift tab - implement your JS here');
+		var b = document.getElementById("btn1before");
+		b.focus();
+	}
+	function flashTabOut(){
+		log('focus out of flash - implement your JS here');
+		var b = document.getElementById("btn1After");
+		b.focus();
+	}
+	
+	function OnFocusIn1(){
+		try{
+			var flash = document.getElementById("uploader");
+		    flash.tabIndex = 1234;  
+		    flash.focus();
+		} catch(err){
+
+		}
+	}
+	
+</script>
+</head>
+
+<body scroll="no" onload=onLoadHandler()>
+<div id="flashContainer">
+	<span>Upload</span>
+<script language="JavaScript" type="text/javascript">
+<!--
+// Version check for the Flash Player that has the ability to start Player Product Install (6.0r65)
+var hasProductInstall = DetectFlashVer(6, 0, 65);
+
+// Version check based upon the values defined in globals
+var hasRequestedVersion = DetectFlashVer(requiredMajorVersion, requiredMinorVersion, requiredRevision);
+
+if ( hasProductInstall && !hasRequestedVersion ) {
+	// DO NOT MODIFY THE FOLLOWING FOUR LINES
+	// Location visited after installation is complete if installation is required
+	var MMPlayerType = (isIE == true) ? "ActiveX" : "PlugIn";
+	var MMredirectURL = window.location;
+		document.title = document.title.slice(0, 47) + " - Flash Player Installation";
+		var MMdoctitle = document.title;
+
+	AC_FL_RunContent(
+		"src", "playerProductInstall",
+		"FlashVars", "MMredirectURL="+MMredirectURL+'&MMplayerType='+MMPlayerType+'&MMdoctitle='+MMdoctitle+"",
+		"width", "${width}",
+		"height", "${height}",
+		"align", "middle",
+		"id", "${application}",
+		"quality", "high",
+		"bgcolor", "${bgcolor}",
+		"name", "${application}",
+		"allowScriptAccess","sameDomain",
+		"type", "application/x-shockwave-flash",
+		"pluginspage", "http://www.adobe.com/go/getflashplayer"
+	);
+} else if (hasRequestedVersion) {
+	// if we've detected an acceptable version
+	// embed the Flash Content SWF when all tests are passed
+	AC_FL_RunContent(
+	
+		//http://www.vidiun.com/vupload/ui_conf_id/11500
+			"src", "${swf}",
+			"width", "${width}",
+			"height", "${height}",
+			"align", "middle",
+			"id", "uploader",
+			"quality", "high",
+			"wmode", "transparent",
+			"bgcolor", "${bgcolor}",
+			"flashvars",  
+						"vs=" +
+						"&partnerId=" +
+						"&protocol=http://" +
+						"&host=www.vidiun.com" +
+						"&entryId=-2" +
+						"&uiConfId=13673672" + 
+						"&jsDelegate=delegate" +
+						"&externalInterfaceDisabled=0" + // 1-disable 0-enable
+						"",
+			"name", "${application}",
+			"allowScriptAccess","always",
+			"type", "application/x-shockwave-flash",
+			"pluginspage", "http://www.adobe.com/go/getflashplayer"
+	);
+} else {  // flash is too old or we can't detect the plugin
+		var alternateContent = 'Alternate HTML content should be placed here. '
+		+ 'This content requires the Adobe Flash Player. '
+		 + '<a href=http://www.adobe.com/go/getflash/>Get Flash</a>';
+		document.write(alternateContent);  // insert non-flash content 
+	}
+// -->
+</script>
+</div>
+<br>
+<br>
+
+		<input type="button" value="button before flash" id="btn1before" >
+		<input type="button" value="button after flash" id="btn1After" >
+		<input type="button" value="Upload" id="uploadBtn"		onclick="upload()">
+		<input type="button" value="focus2Flash" 	onclick="focus2Flash()">
+
+
+	<form>
+		<input type="button" value="Add entries" 	onclick="addEntries()">
+		<input type="button" value="Cancel" 		onclick="stopUploads()">
+		<input type="button" value="Get Error" 		onclick="getError()">
+		<input type="button" value="Get Error Indices" 		onclick="getErrorIndices()">
+	</form>
+
+	<form>
+		<input type="text" id="mediaTypeInput" />
+		<input type="button" value="Set media type" onclick="setMediaType()">
+	</form>
+
+	<form>
+		<input type="button" value="Get Files " onclick="getFiles()">
+	</form>
+
+	<form>
+		<input type="text" value="enter tags here" id="tagsInput" />
+		<input type="text" value="0" id="tagsStartIndex" />
+		<input type="text" value="0" id="tagsEndIndex" />
+
+		<input type="button" value="Add tags" onclick="addTagsFromForm()">
+		<input type="button" value="Set tags" onclick="setTagsFromForm()">
+	</form>
+
+	<form>
+		<input type="text" value="enter title here" id="titleInput" />
+		<input type="text" value="0" id="titleStartIndex" />
+		<input type="text" value="0" id="titleEndIndex" />
+
+		<input type="button" value="Set title" onclick="setTitleFromForm()">
+	</form>
+
+	<form>
+		<input type="text" value="0" id="removeStartIndex" />
+		<input type="text" value="0" id="removeEndIndex" />
+
+		<input type="button" value="Remove Files" onclick="removeFilesFromForm()">
+	</form>
+
+	<form>
+		<input type="text" value="0" id="maxUploadsInput" />
+		<input type="button" value="Set max uploads" onclick="setMaxUploads(parseInt(maxUploadsInput.value))">
+	</form>
+
+	<form>
+		<input type="text" value="partner data goes here" id="partnerDataInput" />
+		<input type="button" value="Set partner data" onclick="setPartnerData(partnerDataInput.value)">
+
+		<input id="groupId" />
+		<input type="button" value="set group id " onClick="setGroupId(groupId.value)">
+
+		<input id="permissions" />
+		<input type="button" value="set permissions" onClick="setPermissions(permissions.value)">
+
+		<input id="screenName" />
+		<input type="button" value="Set screen name" onClick="setScreenName(screenName.value)">
+
+		<input id="siteUrl" />
+		<input type="button" value="set site url" onClick="setSiteUrl(siteUrl.value)">
+	</form>
+	
+
+	<textarea id="log" rows="20" cols="80">
+	</textarea>
+
+</body>
+</html>
