@@ -1,12 +1,12 @@
-package com.kaltura.core
+package com.vidiun.core
 {
-	import com.kaltura.utils.ObjectUtil;
+	import com.vidiun.utils.ObjectUtil;
 	
 	import flash.utils.describeType;
 	import flash.utils.getDefinitionByName;
 
 	
-	public class KClassFactory 
+	public class VClassFactory 
 	{
 		/**
 		 * the vo class to create
@@ -14,7 +14,7 @@ package com.kaltura.core
 	 	public var generator:Class;
 	 	
 		
-	    public function KClassFactory(generator:Class = null)
+	    public function VClassFactory(generator:Class = null)
 	    {
 			super();
 	
@@ -161,13 +161,13 @@ package com.kaltura.core
 		{
 			var cls : Class;
 			try {
-				cls = getDefinitionByName('com.kaltura.vo.'+ objectType) as Class;
+				cls = getDefinitionByName('com.vidiun.vo.'+ objectType) as Class;
 			}
 			catch( e : Error ){
 				cls = Object;
 			}
 			
-			return new KClassFactory( cls ).newInstanceFromXML( XMLList(xmlInfo));
+			return new VClassFactory( cls ).newInstanceFromXML( XMLList(xmlInfo));
 		}
 	}
 }

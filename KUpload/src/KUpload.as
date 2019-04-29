@@ -1,21 +1,21 @@
 package {
-	import com.kaltura.upload.commands.AddEntriesCommand;
-	import com.kaltura.upload.commands.AddTagsCommand;
-	import com.kaltura.upload.commands.BaseUploadCommand;
-	import com.kaltura.upload.commands.BrowseCommand;
-	import com.kaltura.upload.commands.InitCommand;
-	import com.kaltura.upload.commands.RemoveFilesCommand;
-	import com.kaltura.upload.commands.SetMediaTypeCommand;
-	import com.kaltura.upload.commands.SetTagsCommand;
-	import com.kaltura.upload.commands.SetTitleCommand;
-	import com.kaltura.upload.commands.StopUploadsCommand;
-	import com.kaltura.upload.commands.UploadCommand;
-	import com.kaltura.upload.commands.ValidateLimitationsCommand;
-	import com.kaltura.upload.controller.KUploadController;
-	import com.kaltura.upload.enums.KUploadStates;
-	import com.kaltura.upload.events.ActionEvent;
-	import com.kaltura.upload.model.KUploadModelLocator;
-	import com.kaltura.upload.vo.FileVO;
+	import com.vidiun.upload.commands.AddEntriesCommand;
+	import com.vidiun.upload.commands.AddTagsCommand;
+	import com.vidiun.upload.commands.BaseUploadCommand;
+	import com.vidiun.upload.commands.BrowseCommand;
+	import com.vidiun.upload.commands.InitCommand;
+	import com.vidiun.upload.commands.RemoveFilesCommand;
+	import com.vidiun.upload.commands.SetMediaTypeCommand;
+	import com.vidiun.upload.commands.SetTagsCommand;
+	import com.vidiun.upload.commands.SetTitleCommand;
+	import com.vidiun.upload.commands.StopUploadsCommand;
+	import com.vidiun.upload.commands.UploadCommand;
+	import com.vidiun.upload.commands.ValidateLimitationsCommand;
+	import com.vidiun.upload.controller.VUploadController;
+	import com.vidiun.upload.enums.VUploadStates;
+	import com.vidiun.upload.events.ActionEvent;
+	import com.vidiun.upload.model.VUploadModelLocator;
+	import com.vidiun.upload.vo.FileVO;
 	import com.swffocus.SWFFocus;
 	
 	import fl.controls.Button;
@@ -37,19 +37,19 @@ package {
 	import flash.ui.ContextMenuItem;
 	import flash.utils.setTimeout;
 
-	public class KUpload extends Sprite {
+	public class VUpload extends Sprite {
 
 		public static const VERSION:String = "v1.2.16";
 
-		private var _model:KUploadModelLocator = KUploadModelLocator.getInstance();
+		private var _model:VUploadModelLocator = VUploadModelLocator.getInstance();
 		private var _hitArea:MovieClip;
 
 
-		public function KUpload() {
+		public function VUpload() {
 			Security.allowDomain("*");
 			mouseChildren = true;
 			SWFFocus.init(this.stage);
-			KUploadController.getInstance().registerApp(this);
+			VUploadController.getInstance().registerApp(this);
 
 			addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 			addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
@@ -125,7 +125,7 @@ package {
 			addCallbacks();
 
 			this.contextMenu = new ContextMenu();
-			this.contextMenu.customItems = [new ContextMenuItem("KUpload " + VERSION)];
+			this.contextMenu.customItems = [new ContextMenuItem("VUpload " + VERSION)];
 		}
 
 
@@ -168,7 +168,7 @@ package {
 
 
 		private function clickHandler(clickEvent:MouseEvent = null):void {
-			if (_model.state == KUploadStates.READY) {
+			if (_model.state == VUploadStates.READY) {
 				browse();
 			}
 		}
@@ -323,7 +323,7 @@ package {
 
 
 		private function addCallbacks():void {
-			var model:KUploadModelLocator = KUploadModelLocator.getInstance();
+			var model:VUploadModelLocator = VUploadModelLocator.getInstance();
 			if (model.externalInterfaceEnable) {
 				ExternalInterface.addCallback("upload", upload);
 				ExternalInterface.addCallback("browse", browse);

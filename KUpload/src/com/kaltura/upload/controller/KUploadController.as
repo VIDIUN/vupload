@@ -1,29 +1,29 @@
-package com.kaltura.upload.controller
+package com.vidiun.upload.controller
 {
-	public class KUploadController
+	public class VUploadController
 	{
-		private static var _instance:KUploadController = null;
-		private var _kUpload:KUpload;
+		private static var _instance:VUploadController = null;
+		private var _vUpload:VUpload;
 		
-		public function KUploadController(enforcer:Enforcer){}
+		public function VUploadController(enforcer:Enforcer){}
 		
-		public static function getInstance():KUploadController
+		public static function getInstance():VUploadController
 		{
 			if(_instance == null)
 			{
-				_instance = new KUploadController(new Enforcer());
+				_instance = new VUploadController(new Enforcer());
 			}
 			return _instance;
 		}
 		
-		public function registerApp(loader:KUpload):void
+		public function registerApp(loader:VUpload):void
 		{
-			_kUpload = loader;
+			_vUpload = loader;
 		}
 		
-		public function getApp():KUpload
+		public function getApp():VUpload
 		{
-			return _kUpload;
+			return _vUpload;
 		}
 
 	}

@@ -1,16 +1,16 @@
-package com.kaltura.upload.commands {
-	import com.kaltura.KalturaClient;
-	import com.kaltura.commands.uiConf.UiConfGet;
-	import com.kaltura.config.KalturaConfig;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.net.TemplateURLVariables;
-	import com.kaltura.upload.enums.KUploadStates;
-	import com.kaltura.upload.errors.KsuError;
-	import com.kaltura.upload.events.KUploadErrorEvent;
-	import com.kaltura.upload.events.KUploadEvent;
-	import com.kaltura.upload.vo.FileFilterVO;
-	import com.kaltura.utils.KConfigUtil;
-	import com.kaltura.vo.KalturaUiConf;
+package com.vidiun.upload.commands {
+	import com.vidiun.VidiunClient;
+	import com.vidiun.commands.uiConf.UiConfGet;
+	import com.vidiun.config.VidiunConfig;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.net.TemplateURLVariables;
+	import com.vidiun.upload.enums.VUploadStates;
+	import com.vidiun.upload.errors.VsuError;
+	import com.vidiun.upload.events.VUploadErrorEvent;
+	import com.vidiun.upload.events.VUploadEvent;
+	import com.vidiun.upload.vo.FileFilterVO;
+	import com.vidiun.utils.VConfigUtil;
+	import com.vidiun.vo.VidiunUiConf;
 	
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
@@ -40,7 +40,7 @@ package com.kaltura.upload.commands {
 
 		override public function execute():void {
 			trace('execute init command');
-			model.state = KUploadStates.INITIALIZING;
+			model.state = VUploadStates.INITIALIZING;
 			saveBaseFlashVars();
 
 			setModelData();
@@ -49,7 +49,7 @@ package com.kaltura.upload.commands {
 
 
 		private function saveBaseFlashVars():void {
-			var config:KalturaConfig = new KalturaConfig();
+			var config:VidiunConfig = new VidiunConfig();
 			var hostFlashvar:String = _params.host;
 			var protocol:String;
 			var domain:String;
@@ -86,10 +86,10 @@ package com.kaltura.upload.commands {
 			config.domain = domain;
 
 
-			config.ks = _params.ks;
+			config.vs = _params.vs;
 			config.partnerId = _params.partnerId;
 
-			model.context.kc = new KalturaClient(config);
+			model.context.vc = new VidiunClient(config);
 			model.context.subPartnerId = _params.partnerId;
 			model.context.userId = _params.uid;
 			model.context.partnerData = _params.partnerData;
@@ -97,8 +97,8 @@ package com.kaltura.upload.commands {
 			model.context.groupId = _params.groupId;
 			model.entryId = _params.entryId;
 			model.uiConfId = _params.uiConfId;
-			if (_params.kuploadUiconfId)
-				model.uiConfId = _params.kuploadUiconfId;
+			if (_params.vuploadUiconfId)
+				model.uiConfId = _params.vuploadUiconfId;
 			model.jsDelegate = _params.jsDelegate;
 
 			model.externalInterfaceEnable = _params.externalInterfaceDisabled != '1';
@@ -113,35 +113,35 @@ package com.kaltura.upload.commands {
 
 
 		private function setModelData():void {
-			model.baseRequestData = {ks: model.context.kc.ks,
-					partner_id: model.context.kc.partnerId,
+			model.baseRequestData = {vs: model.context.vc.vs,
+					partner_id: model.context.vc.partnerId,
 					subp_id: model.context.subPartnerId,
 					uid: model.context.userId};
 		}
 
 
 		/**
-		 * request ksu uiconf
+		 * request vsu uiconf
 		 * */
 		private function loadConfiguration():void {
 			var uiconfGet:UiConfGet = new UiConfGet(parseInt(model.uiConfId));
-			uiconfGet.addEventListener(KalturaEvent.COMPLETE, uiconfResult);
-			uiconfGet.addEventListener(KalturaEvent.FAILED, uiconfFault);
-			model.context.kc.post(uiconfGet);
+			uiconfGet.addEventListener(VidiunEvent.COMPLETE, uiconfResult);
+			uiconfGet.addEventListener(VidiunEvent.FAILED, uiconfFault);
+			model.context.vc.post(uiconfGet);
 		}
 
 
 		private function uiconfFault(info:Object):void {
-			var notifyShell:NotifyShellCommand = new NotifyShellCommand(KUploadErrorEvent.UI_CONF_ERROR);
+			var notifyShell:NotifyShellCommand = new NotifyShellCommand(VUploadErrorEvent.UI_CONF_ERROR);
 			notifyShell.execute();
 		}
 
 
-		private function uiconfResult(event:KalturaEvent):void {
-			var result:KalturaUiConf = event.data as KalturaUiConf;
+		private function uiconfResult(event:VidiunEvent):void {
+			var result:VidiunUiConf = event.data as VidiunUiConf;
 			parseConfiguration(new XML(result.confFile));
 			saveConfigurationFlashVars();
-			kuploadReady();
+			vuploadReady();
 
 		}
 
@@ -173,12 +173,12 @@ package com.kaltura.upload.commands {
 				setFiltersOrder();
 
 			var xmlLimits:XML = configXml.limits[0];
-			model.maxUploads = KConfigUtil.getDefaultValue(xmlLimits.@maxUploads[0], model.maxUploads);
-			model.maxFileSize = KConfigUtil.getDefaultValue(xmlLimits.@maxFileSize[0], model.maxFileSize);
-			model.maxTotalSize = KConfigUtil.getDefaultValue(xmlLimits.@maxTotalSize[0], model.maxTotalSize);
+			model.maxUploads = VConfigUtil.getDefaultValue(xmlLimits.@maxUploads[0], model.maxUploads);
+			model.maxFileSize = VConfigUtil.getDefaultValue(xmlLimits.@maxFileSize[0], model.maxFileSize);
+			model.maxTotalSize = VConfigUtil.getDefaultValue(xmlLimits.@maxTotalSize[0], model.maxTotalSize);
 
-			model.conversionProfile = KConfigUtil.getDefaultValue(configXml.@conversionProfile[0], model.conversionProfile);
-			model.uploadUrl = KConfigUtil.getDefaultValue(configXml.@uploadUrl, model.uploadUrl);
+			model.conversionProfile = VConfigUtil.getDefaultValue(configXml.@conversionProfile[0], model.conversionProfile);
+			model.uploadUrl = VConfigUtil.getDefaultValue(configXml.@uploadUrl, model.uploadUrl);
 
 			var map:Object = parseCMUIVar(configXml);
 			model.conversionMapping = map != null ? map : model.conversionMapping;
@@ -210,25 +210,25 @@ package com.kaltura.upload.commands {
 
 
 		private function dispatchUiConfError():void {
-			var notifyShell:NotifyShellCommand = new NotifyShellCommand(KUploadErrorEvent.UI_CONF_ERROR);
+			var notifyShell:NotifyShellCommand = new NotifyShellCommand(VUploadErrorEvent.UI_CONF_ERROR);
 			notifyShell.execute();
 		}
 
 
-		private function kuploadReady():void {
-			model.state = KUploadStates.READY
-			var notifyShellCommand:NotifyShellCommand = new NotifyShellCommand(KUploadEvent.READY);
+		private function vuploadReady():void {
+			model.state = VUploadStates.READY
+			var notifyShellCommand:NotifyShellCommand = new NotifyShellCommand(VUploadEvent.READY);
 			notifyShellCommand.execute();
 		}
 
 
 		private function saveConfigurationFlashVars():void {
-			model.quickEdit = KConfigUtil.getDefaultValue(_params.quickEdit, model.quickEdit);
-			model.maxFileSize = KConfigUtil.getDefaultValue(_params.maxFileSize, model.maxFileSize);
-			model.maxTotalSize = KConfigUtil.getDefaultValue(_params.maxTotalSize, model.maxTotalSize);
-			model.maxUploads = KConfigUtil.getDefaultValue(_params.maxUploads, model.maxUploads);
-			model.conversionProfile = KConfigUtil.getDefaultValue(_params.conversionProfile, model.conversionProfile);
-			model.uploadUrl = KConfigUtil.getDefaultValue(_params.uploadUrl, model.uploadUrl);
+			model.quickEdit = VConfigUtil.getDefaultValue(_params.quickEdit, model.quickEdit);
+			model.maxFileSize = VConfigUtil.getDefaultValue(_params.maxFileSize, model.maxFileSize);
+			model.maxTotalSize = VConfigUtil.getDefaultValue(_params.maxTotalSize, model.maxTotalSize);
+			model.maxUploads = VConfigUtil.getDefaultValue(_params.maxUploads, model.maxUploads);
+			model.conversionProfile = VConfigUtil.getDefaultValue(_params.conversionProfile, model.conversionProfile);
+			model.uploadUrl = VConfigUtil.getDefaultValue(_params.uploadUrl, model.uploadUrl);
 
 			if (_params.conversionMapping != null) {
 				var map:Object = parseCMFlashVar(_params.conversionMapping);
@@ -271,7 +271,7 @@ package com.kaltura.upload.commands {
 		private function prepareWarningError(message:String):void {
 			function warningErrorTimerHandler(evt:TimerEvent):void {
 				var timer:Timer = evt.target as Timer
-				throw new KsuError("Warning: " + message, KsuError.WARNING);
+				throw new VsuError("Warning: " + message, VsuError.WARNING);
 			}
 			var timer:Timer = new Timer(0, 1);
 			timer.addEventListener(TimerEvent.TIMER_COMPLETE, warningErrorTimerHandler);

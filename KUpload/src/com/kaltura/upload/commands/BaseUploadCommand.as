@@ -1,12 +1,12 @@
-package com.kaltura.upload.commands
+package com.vidiun.upload.commands
 {
-	import com.kaltura.upload.model.KUploadModelLocator;
+	import com.vidiun.upload.model.VUploadModelLocator;
 
 	import flash.events.EventDispatcher;
 
 	public class BaseUploadCommand extends EventDispatcher
 	{
-		protected var model:KUploadModelLocator = KUploadModelLocator.getInstance();
+		protected var model:VUploadModelLocator = VUploadModelLocator.getInstance();
 		public function execute():void
 		{
 		}

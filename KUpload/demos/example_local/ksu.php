@@ -3,22 +3,22 @@
 
 <!--include external scripts and define constants -->
 <?php 
-	require_once("kaltura_client_v3/KalturaClient.php"); 
+	require_once("vidiun_client_v3/VidiunClient.php"); 
 	
 	//define constants
-	define("KALTURA_PARTNER_ID", 321011);
-	define("KALTURA_PARTNER_WEB_SERVICE_SECRET", "5832f358f01e0b0da9c2cb64ff7f05b2");
+	define("VIDIUN_PARTNER_ID", 321011);
+	define("VIDIUN_PARTNER_WEB_SERVICE_SECRET", "5832f358f01e0b0da9c2cb64ff7f05b2");
 	
-	define("KSU_UICONFID", 25740421); 
+	define("VSU_UICONFID", 25740421); 
 	
 	//define session variables
 	$partnerUserID          = 'yuval';
 	
 	
-	//Construction of Kaltura objects for session initiation
-	$config           = new KalturaConfiguration(KALTURA_PARTNER_ID);
-	$client           = new KalturaClient($config);
-	$ks               = $client->session->start(KALTURA_PARTNER_WEB_SERVICE_SECRET, $partnerUserID, KalturaSessionType::USER, KALTURA_PARTNER_ID);
+	//Construction of Vidiun objects for session initiation
+	$config           = new VidiunConfiguration(VIDIUN_PARTNER_ID);
+	$client           = new VidiunClient($config);
+	$vs               = $client->session->start(VIDIUN_PARTNER_WEB_SERVICE_SECRET, $partnerUserID, VidiunSessionType::USER, VIDIUN_PARTNER_ID);
 
 ?>
 
@@ -41,7 +41,7 @@
 	var UploadProgressText = "";
 	var UploadProgressTitle = "";
 
-	//KSU handlers
+	//VSU handlers
 
 	//This handler checks if the SWF object was loaded or not
 	delegate.readyHandler = function()
@@ -85,7 +85,7 @@
 		
 	}
 
-	//This handler fires up when the uploaded files are set as entries in the KMC.
+	//This handler fires up when the uploaded files are set as entries in the VMC.
 	delegate.entriesAddedHandler = function(entries)
 	{
 		parent.frames["Results"].document.getElementById("txtResults").value = parent.frames["Results"].document.getElementById("txtResults").value + "Done!\n\n";
@@ -111,7 +111,7 @@
 		console.log("ui conf loading error");
 	}
 
-	<!--- JavaScript callback methods to activate Kaltura services via the KSU widget.-->
+	<!--- JavaScript callback methods to activate Vidiun services via the VSU widget.-->
 	
 	//This function fires the upload
 	function upload()
@@ -148,7 +148,7 @@
 		parent.parent.frames["Steps"].document.getElementById("Step5").style.display = "";
 	}
 
-	//This function connect to the Kaltura networks and adds the uploaded content as entries into the KMC
+	//This function connect to the Vidiun networks and adds the uploaded content as entries into the VMC
 	function addEntries()
 	{
 		flashObj.addEntries();
@@ -308,18 +308,18 @@
                 };
                 var attributes = {
                             id: "uploader",
-                            name: "KUploader"
+                            name: "VUploader"
                 };
                 // set flashVar object
                 var flashVars = {
 							uid: "<?PHP echo "$partnerUserID" ?>",
-							partnerId: <?php echo KALTURA_PARTNER_ID; ?>,
+							partnerId: <?php echo VIDIUN_PARTNER_ID; ?>,
 							entryId: -1,
-							ks: "<?PHP echo "$ks" ?>",
-							uiConfId: <?php echo KSU_UICONFID; ?>,
+							vs: "<?PHP echo "$vs" ?>",
+							uiConfId: <?php echo VSU_UICONFID; ?>,
 							jsDelegate: "delegate" };
 				
-                swfobject.embedSWF("assets/KUpload.swf", "uploader", "180", "20", "9.0.0", "expressInstall.swf",flashVars, params,attributes);
+                swfobject.embedSWF("assets/VUpload.swf", "uploader", "180", "20", "9.0.0", "expressInstall.swf",flashVars, params,attributes);
 		</script>
 	
 

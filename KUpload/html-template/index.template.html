@@ -47,7 +47,7 @@ var requiredRevision = ${version_revision};
 	var app;
 	var delegate = {};
 
-	//KUploader callbacks
+	//VUploader callbacks
 	delegate.readyHandler = function()
 	{
 		app = document.getElementById("uploader");
@@ -105,7 +105,7 @@ var requiredRevision = ${version_revision};
 		alert("ui conf loading error");
 	}
 
-	//KUplaoder API calls
+	//VUplaoder API calls
 
 	function upload()
 	{
@@ -161,7 +161,7 @@ var requiredRevision = ${version_revision};
 		app.setPartnerData(value);
 	}
 
-	//End of KUploder API calls
+	//End of VUploder API calls
 	//--------------------------------------------------------------------
 
 	function setMediaType()
@@ -350,7 +350,7 @@ if ( hasProductInstall && !hasRequestedVersion ) {
 	// embed the Flash Content SWF when all tests are passed
 	AC_FL_RunContent(
 	
-		//http://www.kaltura.com/kupload/ui_conf_id/11500
+		//http://www.vidiun.com/vupload/ui_conf_id/11500
 			"src", "${swf}",
 			"width", "${width}",
 			"height", "${height}",
@@ -360,10 +360,10 @@ if ( hasProductInstall && !hasRequestedVersion ) {
 			"wmode", "transparent",
 			"bgcolor", "${bgcolor}",
 			"flashvars",  
-						"ks=" +
+						"vs=" +
 						"&partnerId=" +
 						"&protocol=http://" +
-						"&host=www.kaltura.com" +
+						"&host=www.vidiun.com" +
 						"&entryId=-2" +
 						"&uiConfId=13673672" + 
 						"&jsDelegate=delegate" +

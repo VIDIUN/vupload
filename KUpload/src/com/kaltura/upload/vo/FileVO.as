@@ -1,7 +1,7 @@
-package com.kaltura.upload.vo
+package com.vidiun.upload.vo
 {
-	import com.kaltura.net.PolledFileReference;
-	import com.kaltura.vo.importees.UploadStatusTypes;
+	import com.vidiun.net.PolledFileReference;
+	import com.vidiun.vo.importees.UploadStatusTypes;
 	
 	import flash.events.Event;
 	import flash.events.ProgressEvent;

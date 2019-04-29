@@ -1,6 +1,6 @@
-private static var _instance:KUploadModelLocator;
+private static var _instance:VUploadModelLocator;
 
-public function KUploadModelLocator()
+public function VUploadModelLocator()
 {
 	if (_instance == null)
 	{
@@ -9,11 +9,11 @@ public function KUploadModelLocator()
 
 }
 
-public static function getInstance():KUploadModelLocator
+public static function getInstance():VUploadModelLocator
 {
 	if (_instance == null)
 	{
-		_instance = new KUploadModelLocator();
+		_instance = new VUploadModelLocator();
 	}
 	return _instance;
 }

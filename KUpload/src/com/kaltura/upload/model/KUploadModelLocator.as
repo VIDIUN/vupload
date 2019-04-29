@@ -1,11 +1,11 @@
-package com.kaltura.upload.model
+package com.vidiun.upload.model
 {
-	import com.kaltura.upload.vo.FileFilterVO;
-	import com.kaltura.upload.vo.FileVO;
+	import com.vidiun.upload.vo.FileFilterVO;
+	import com.vidiun.upload.vo.FileVO;
 	
 	import flash.utils.Dictionary;
 
-	public class KUploadModelLocator
+	public class VUploadModelLocator
 	{
 		//Singleton implementation
 		//---------------------------------
@@ -15,13 +15,13 @@ package com.kaltura.upload.model
 		public var context:Context = new Context();
 		
 		//Basic parameters
-		public var ks:String;
+		public var vs:String;
 		public var uid:String;
 		public var uiConfId:String;
 		public var partnerId:String;
 		public var subPId:String;
 		public var externalInterfaceEnable:Boolean;
-		public var host:String = "http://www.kaltura.com";
+		public var host:String = "http://www.vidiun.com";
 
 
 		public var screenName:String;

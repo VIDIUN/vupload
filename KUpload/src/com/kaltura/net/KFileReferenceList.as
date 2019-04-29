@@ -1,4 +1,4 @@
-package com.kaltura.net
+package com.vidiun.net
 {
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -6,12 +6,12 @@ package com.kaltura.net
 
 	[Event(name="cancel", type="flash.events.Event")]
 	[Event(name="select", type="flash.events.Event")]
-	public class KFileReferenceList extends EventDispatcher
+	public class VFileReferenceList extends EventDispatcher
 	{
 		private var _fileReferenceList:FileReferenceList;
 		private var _fileList:Array;
 
-		public function KFileReferenceList()
+		public function VFileReferenceList()
 		{
 			_fileReferenceList = new FileReferenceList();
 			_fileReferenceList.addEventListener(Event.SELECT, fileReferenceListSelectHandler);

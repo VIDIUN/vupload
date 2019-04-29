@@ -1,8 +1,8 @@
-package com.kaltura.upload.commands
+package com.vidiun.upload.commands
 {
-	import com.kaltura.upload.events.KUploadErrorEvent;
-	import com.kaltura.upload.vo.FileVO;
-	import com.kaltura.vo.importees.UploadStatusTypes;
+	import com.vidiun.upload.events.VUploadErrorEvent;
+	import com.vidiun.upload.vo.FileVO;
+	import com.vidiun.vo.importees.UploadStatusTypes;
 
 	public class ValidateUploadCommand extends BaseUploadCommand
 	{
@@ -21,7 +21,7 @@ package com.kaltura.upload.commands
 
 			if (anyUploadErrors)
 			{
-				model.error = KUploadErrorEvent.UPLOAD_ERROR;
+				model.error = VUploadErrorEvent.UPLOAD_ERROR;
 				model.uploadedErrorIndices = uploadErrorIndices;
 			}
 			else

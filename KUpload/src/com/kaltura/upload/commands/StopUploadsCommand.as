@@ -1,6 +1,6 @@
-package com.kaltura.upload.commands
+package com.vidiun.upload.commands
 {
-	import com.kaltura.upload.vo.FileVO;
+	import com.vidiun.upload.vo.FileVO;
 
 	public class StopUploadsCommand extends BaseUploadCommand
 	{

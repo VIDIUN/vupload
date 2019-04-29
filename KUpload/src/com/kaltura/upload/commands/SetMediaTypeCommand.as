@@ -1,7 +1,7 @@
-package com.kaltura.upload.commands
+package com.vidiun.upload.commands
 {
-	import com.kaltura.upload.errors.KsuError;
-	import com.kaltura.upload.vo.FileFilterVO;
+	import com.vidiun.upload.errors.VsuError;
+	import com.vidiun.upload.vo.FileFilterVO;
 
 	public class SetMediaTypeCommand extends BaseUploadCommand
 	{
@@ -23,7 +23,7 @@ package com.kaltura.upload.commands
 			}
 			else
 			{
-				throw new KsuError("No such file filter id: " + _mediaType, KsuError.MISSING_FILTER_FOR_MEDIA_TYPE);
+				throw new VsuError("No such file filter id: " + _mediaType, VsuError.MISSING_FILTER_FOR_MEDIA_TYPE);
 			}
 		}
 

@@ -1,6 +1,6 @@
-package com.kaltura.upload.commands
+package com.vidiun.upload.commands
 {
-	import com.kaltura.upload.errors.KsuError;
+	import com.vidiun.upload.errors.VsuError;
 
 	public class RemoveFilesCommand extends BaseUploadCommand
 	{
@@ -17,9 +17,9 @@ package com.kaltura.upload.commands
 		{
 			var deleteCount:int = _endIndex - _startIndex + 1;
 			if (deleteCount <= 0)
-				throw new KsuError("Files delete count (" + deleteCount + ") is not valid.", KsuError.FILES_RANGE_ERROR);
+				throw new VsuError("Files delete count (" + deleteCount + ") is not valid.", VsuError.FILES_RANGE_ERROR);
 			else if (!model.files[_startIndex] || !model.files[_endIndex])
-				throw new KsuError("Delete range error", KsuError.FILES_RANGE_ERROR);
+				throw new VsuError("Delete range error", VsuError.FILES_RANGE_ERROR);
 			model.files.splice( _startIndex, deleteCount);
 
 			var validateLimitationsCommand:ValidateLimitationsCommand = new ValidateLimitationsCommand();

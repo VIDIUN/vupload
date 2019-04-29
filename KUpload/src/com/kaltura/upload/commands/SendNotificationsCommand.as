@@ -1,7 +1,7 @@
-package com.kaltura.upload.commands
+package com.vidiun.upload.commands
 {
-	import com.kaltura.upload.business.PartnerNotificationVO;
-	import com.kaltura.upload.events.KUploadEvent;
+	import com.vidiun.upload.business.PartnerNotificationVO;
+	import com.vidiun.upload.events.VUploadEvent;
 
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
@@ -74,7 +74,7 @@ package com.kaltura.upload.commands
 		private function sendNotificationsComplete():void
 		{
 			dispose();
-			var notifyShell:NotifyShellCommand = new NotifyShellCommand(KUploadEvent.ENTRIES_ADDED, model.files);
+			var notifyShell:NotifyShellCommand = new NotifyShellCommand(VUploadEvent.ENTRIES_ADDED, model.files);
 	   		notifyShell.execute();
 			//clear already added files
 			model.files = [];

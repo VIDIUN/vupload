@@ -1,9 +1,9 @@
-package com.kaltura.upload.commands {
-	import com.kaltura.net.PolledFileReference;
-	import com.kaltura.upload.events.KUploadErrorEvent;
-	import com.kaltura.upload.events.KUploadEvent;
-	import com.kaltura.upload.vo.FileFilterVO;
-	import com.kaltura.upload.vo.FileVO;
+package com.vidiun.upload.commands {
+	import com.vidiun.net.PolledFileReference;
+	import com.vidiun.upload.events.VUploadErrorEvent;
+	import com.vidiun.upload.events.VUploadEvent;
+	import com.vidiun.upload.vo.FileFilterVO;
+	import com.vidiun.upload.vo.FileVO;
 	
 	import flash.events.Event;
 	import flash.net.FileFilter;
@@ -74,7 +74,7 @@ package com.kaltura.upload.commands {
 				fileVO.extension = nameSplitted[nameSplitted.length - 1];
 				if (!isValidType(fileVO.extension)) {
 					model.selectedErrorIndices.push(i);
-					model.error = KUploadErrorEvent.WRONG_FILE_TYPE;
+					model.error = VUploadErrorEvent.WRONG_FILE_TYPE;
 				}
 				if (model.activeFileFilterVO) {
 					fileVO.mediaTypeCode = model.activeFileFilterVO.mediaType;
@@ -92,14 +92,14 @@ package com.kaltura.upload.commands {
 				trace('validate selected file(s)');
 				var validateLimitationsCommand:ValidateLimitationsCommand = new ValidateLimitationsCommand();
 				validateLimitationsCommand.execute();
-				if (model.error == KUploadErrorEvent.FILE_SIZE_EXCEEDS || model.error == KUploadErrorEvent.TOTAL_SIZE_EXCEEDS || model.error == KUploadErrorEvent.NUM_FILES_EXCEEDS) {
+				if (model.error == VUploadErrorEvent.FILE_SIZE_EXCEEDS || model.error == VUploadErrorEvent.TOTAL_SIZE_EXCEEDS || model.error == VUploadErrorEvent.NUM_FILES_EXCEEDS) {
 					// Error - do not continue to next phase 
 					model.files = [];
 					return;
 				}
 			}
 			trace('notify upload event with selected file(s)');
-			var notifyShell:NotifyShellCommand = new NotifyShellCommand(KUploadEvent.SELECT);
+			var notifyShell:NotifyShellCommand = new NotifyShellCommand(VUploadEvent.SELECT);
 			notifyShell.execute()
 		}
 

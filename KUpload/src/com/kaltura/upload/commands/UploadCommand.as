@@ -1,16 +1,16 @@
-package com.kaltura.upload.commands
+package com.vidiun.upload.commands
 {
-	import com.kaltura.commands.uploadToken.UploadTokenAdd;
-	import com.kaltura.commands.uploadToken.UploadTokenUpload;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.net.PolledFileReference;
-	import com.kaltura.net.TemplateURLVariables;
-	import com.kaltura.upload.errors.KsuError;
-	import com.kaltura.upload.events.KUploadErrorEvent;
-	import com.kaltura.upload.events.KUploadEvent;
-	import com.kaltura.upload.vo.FileVO;
-	import com.kaltura.vo.KalturaUploadToken;
-	import com.kaltura.vo.importees.UploadStatusTypes;
+	import com.vidiun.commands.uploadToken.UploadTokenAdd;
+	import com.vidiun.commands.uploadToken.UploadTokenUpload;
+	import com.vidiun.events.VidiunEvent;
+	import com.vidiun.net.PolledFileReference;
+	import com.vidiun.net.TemplateURLVariables;
+	import com.vidiun.upload.errors.VsuError;
+	import com.vidiun.upload.events.VUploadErrorEvent;
+	import com.vidiun.upload.events.VUploadEvent;
+	import com.vidiun.upload.vo.FileVO;
+	import com.vidiun.vo.VidiunUploadToken;
+	import com.vidiun.vo.importees.UploadStatusTypes;
 	
 	import flash.events.Event;
 	import flash.events.HTTPStatusEvent;
@@ -31,11 +31,11 @@ package com.kaltura.upload.commands
 		override public function execute():void
 		{
 
-			if (model.error == KUploadErrorEvent.FILE_SIZE_EXCEEDS ||
-				model.error == KUploadErrorEvent.TOTAL_SIZE_EXCEEDS ||
-				model.error == KUploadErrorEvent.NUM_FILES_EXCEEDS)
+			if (model.error == VUploadErrorEvent.FILE_SIZE_EXCEEDS ||
+				model.error == VUploadErrorEvent.TOTAL_SIZE_EXCEEDS ||
+				model.error == VUploadErrorEvent.NUM_FILES_EXCEEDS)
 			{
-				throw new KsuError("Cannot upload, limitations exceeded:" + model.error + ". Please check for errors", KsuError.LIMITATIONS_EXCEEDED);
+				throw new VsuError("Cannot upload, limitations exceeded:" + model.error + ". Please check for errors", VsuError.LIMITATIONS_EXCEEDED);
 				return;
 			}
 			trace('upload selected file(s)');
@@ -59,14 +59,14 @@ package com.kaltura.upload.commands
 					_activeFile.file.fileReference.upload(uploadRequest);
 				}
 				else {
-					var fileToken:KalturaUploadToken = new KalturaUploadToken();
+					var fileToken:VidiunUploadToken = new VidiunUploadToken();
 					fileToken.fileName = _activeFile.file.fileReference.name;
 					fileToken.fileSize = _activeFile.file.bytesTotal;
 					var uploadToken:UploadTokenAdd = new UploadTokenAdd(fileToken);
-					uploadToken.addEventListener(KalturaEvent.COMPLETE, uploadTokenAddHandler);
-					uploadToken.addEventListener(KalturaEvent.FAILED, onUploadTokenFailed);
+					uploadToken.addEventListener(VidiunEvent.COMPLETE, uploadTokenAddHandler);
+					uploadToken.addEventListener(VidiunEvent.FAILED, onUploadTokenFailed);
 					
-					model.context.kc.post(uploadToken);
+					model.context.vc.post(uploadToken);
 				}
 				
 			}
@@ -79,14 +79,14 @@ package com.kaltura.upload.commands
 		/**
 		 * file token was added, now upload the file
 		 * */
-		private function uploadTokenAddHandler(event:KalturaEvent):void {
-			var tokenId:String = (event.data as KalturaUploadToken).id;
+		private function uploadTokenAddHandler(event:VidiunEvent):void {
+			var tokenId:String = (event.data as VidiunUploadToken).id;
 			_activeFile.token = tokenId;
 			_call = new UploadTokenUpload(tokenId, _activeFile.file.fileReference);
 			_call.useTimeout = false;
 			setupFileListeners();
 			
-			model.context.kc.post(_call);
+			model.context.vc.post(_call);
 		}
 		
 		private function setupFileListeners():void
@@ -95,8 +95,8 @@ package com.kaltura.upload.commands
 				_activeFile.file.fileReference.addEventListener(Event.COMPLETE, 					fileCompleteHandler);
 			}
 			else {
-				_call.addEventListener(KalturaEvent.COMPLETE, 										fileCompleteHandler);
-				_call.addEventListener(KalturaEvent.FAILED, 										onFileFailed);
+				_call.addEventListener(VidiunEvent.COMPLETE, 										fileCompleteHandler);
+				_call.addEventListener(VidiunEvent.FAILED, 										onFileFailed);
 			}
 			_activeFile.file.fileReference.addEventListener(IOErrorEvent.IO_ERROR, 					onFileFailed );
 			_activeFile.file.fileReference.addEventListener(SecurityErrorEvent.SECURITY_ERROR, 		onFileFailed);
@@ -117,8 +117,8 @@ package com.kaltura.upload.commands
 				_activeFile.file.fileReference.removeEventListener(Event.COMPLETE, 					fileCompleteHandler);
 			}
 			else {
-				_call.removeEventListener(KalturaEvent.COMPLETE, 									fileCompleteHandler);
-				_call.removeEventListener(KalturaEvent.FAILED, 										onFileFailed);
+				_call.removeEventListener(VidiunEvent.COMPLETE, 									fileCompleteHandler);
+				_call.removeEventListener(VidiunEvent.FAILED, 										onFileFailed);
 			}
 			_activeFile.file.fileReference.removeEventListener(IOErrorEvent.IO_ERROR, 				onFileFailed );
 			_activeFile.file.fileReference.removeEventListener(SecurityErrorEvent.SECURITY_ERROR,	onFileFailed);
@@ -134,7 +134,7 @@ package com.kaltura.upload.commands
 		{
 			trace('finish uploading selected file(s)');
 			_activeFile.uploadStatus = UploadStatusTypes.UPLOAD_COMPLETE;
-			var notifyShell:NotifyShellCommand = new NotifyShellCommand(KUploadEvent.SINGLE_UPLOAD_COMPLETE, [_activeFile]);
+			var notifyShell:NotifyShellCommand = new NotifyShellCommand(VUploadEvent.SINGLE_UPLOAD_COMPLETE, [_activeFile]);
 			notifyShell.execute();
 	
 			removeFileListeners();
@@ -149,8 +149,8 @@ package com.kaltura.upload.commands
 			var rfileName:String = 'unknownFileName';
 			var fileName:String = _activeFile.file.fileReference.name;
 			switch (event.type) {
-				case KalturaEvent.FAILED:
-					str = 'KalturaEvent.FAILED, ' + (event as KalturaEvent).error.errorMsg;
+				case VidiunEvent.FAILED:
+					str = 'VidiunEvent.FAILED, ' + (event as VidiunEvent).error.errorMsg;
 					rfileName = (event.target.fileData as FileReference).name;
 					break;
 				case IOErrorEvent.IO_ERROR:
@@ -183,7 +183,7 @@ package com.kaltura.upload.commands
 
 		private function onFileComplete(evtComplete:Event):void
 		{
-			var notifyShell:NotifyShellCommand = new NotifyShellCommand(KUploadEvent.SINGLE_UPLOAD_COMPLETE, [_activeFile]);
+			var notifyShell:NotifyShellCommand = new NotifyShellCommand(VUploadEvent.SINGLE_UPLOAD_COMPLETE, [_activeFile]);
 			notifyShell.execute();
 
 			uploadNextFile();
@@ -197,13 +197,13 @@ package com.kaltura.upload.commands
 		private function fileOpenHandler(openEvent:Event):void
 		{
 			//report the progress because if the upload is fast, the 0 bytes out of X progress event doesn't always dispatched
-			var notifyShell:NotifyShellCommand = new NotifyShellCommand(KUploadEvent.PROGRESS, [0, _activeFile.bytesTotal, _activeFile]);
+			var notifyShell:NotifyShellCommand = new NotifyShellCommand(VUploadEvent.PROGRESS, [0, _activeFile.bytesTotal, _activeFile]);
 			notifyShell.execute();
 
 		}
 		private function fileProgressHandler(progressEvent:ProgressEvent):void
 		{
-			var notifyShell:NotifyShellCommand = new NotifyShellCommand(KUploadEvent.PROGRESS, [progressEvent.bytesLoaded, progressEvent.bytesTotal, _activeFile]);
+			var notifyShell:NotifyShellCommand = new NotifyShellCommand(VUploadEvent.PROGRESS, [progressEvent.bytesLoaded, progressEvent.bytesTotal, _activeFile]);
 			notifyShell.execute();
 		}
 
@@ -221,7 +221,7 @@ package com.kaltura.upload.commands
 			var validateUploads:ValidateUploadCommand = new ValidateUploadCommand();
 			validateUploads.execute();
 
-			var notifyShell:NotifyShellCommand = new NotifyShellCommand(KUploadEvent.ALL_UPLOADS_COMPLETE);
+			var notifyShell:NotifyShellCommand = new NotifyShellCommand(VUploadEvent.ALL_UPLOADS_COMPLETE);
 			notifyShell.execute();
 		}
 

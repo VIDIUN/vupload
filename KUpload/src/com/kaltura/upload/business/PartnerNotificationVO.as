@@ -1,4 +1,4 @@
-package com.kaltura.upload.business
+package com.vidiun.upload.business
 {
 	public class PartnerNotificationVO
 	{

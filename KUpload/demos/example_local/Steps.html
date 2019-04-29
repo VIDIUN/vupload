@@ -27,16 +27,16 @@
 		</TR>
 		<TR>
 			<TD CLASS="Info">
-				The following example will show you how to <B><U>easily</U></B> implement the <B><I>Kaltura Simple Uploader (KSU)</I></B>
+				The following example will show you how to <B><U>easily</U></B> implement the <B><I>Vidiun Simple Uploader (VSU)</I></B>
 				on to your web page.
 				<BR /><BR />
-				The KSU has a flash object loaded in order to enable the browsing and selecting of content to upload.
+				The VSU has a flash object loaded in order to enable the browsing and selecting of content to upload.
 				<BR />
 				We can find it in the code where it says: <B><I>"--embed flash object--"</I></B>
 				<BR /><BR />
 				The first step in understanding the code behind this example is to know when the SWF flash object is loaded.
 				<BR />
-				Look for the following handler, in the KSU handlers section, where it says: <B><I>delegate.readyHandler</I></B>
+				Look for the following handler, in the VSU handlers section, where it says: <B><I>delegate.readyHandler</I></B>
 				<BR />
 				That's where we know if the flash object was loaded or not.
 				<BR />
@@ -66,11 +66,11 @@
 				<BR /><BR />
 				How do we know that ?
 				<BR />
-				Easy! We can find the handler who takes care of it in the code, in the KSU handlers section where it says: <B><I>"delegate.selectHandler"</I></B>
+				Easy! We can find the handler who takes care of it in the code, in the VSU handlers section where it says: <B><I>"delegate.selectHandler"</I></B>
 				<BR /><BR />
 				There are lots of other actions you might like to take before uploading, such as: Add tags, Add titles etc.
 				<BR />
-				To better understand how to do it, please go to <B><I>"KSU Website Integration Guide"</I></B> on: <A CLASS="Link" HREF="http://www.kaltura.org/kaltura-simple-uploader-ksu-website-integration-guide" TARGET="_BLANK">http://www.kaltura.org/kaltura-simple-uploader-ksu-website-integration-guide</A>
+				To better understand how to do it, please go to <B><I>"VSU Website Integration Guide"</I></B> on: <A CLASS="Link" HREF="http://www.vidiun.org/vidiun-simple-uploader-vsu-website-integration-guide" TARGET="_BLANK">http://www.vidiun.org/vidiun-simple-uploader-vsu-website-integration-guide</A>
 				<BR /><BR />
 				What's next ? Let's upload the selected content!
 				<BR /><BR />
@@ -85,13 +85,13 @@
 		</TR>
 		<TR>
 			<TD CLASS="Info">
-				Now we are uploading the content to the Kaltura network.
+				Now we are uploading the content to the Vidiun network.
 				<BR />
 				We can see in the results pane the upload progress for each file selected for upload:
 				<BR /><BR />
 				How do we know what is the content upload progression ?
 				<BR />
-				Easy! We can find the handler who takes care of it in the code, in the KSU handlers section where it says: <B><I>"delegate.progressHandler"</I></B>
+				Easy! We can find the handler who takes care of it in the code, in the VSU handlers section where it says: <B><I>"delegate.progressHandler"</I></B>
 				<BR /><BR />
 				When each file done uploading, we'll see in the results pane the name of the file done.
 				<BR />
@@ -99,7 +99,7 @@
 				<BR /><BR />
 				And how do we know that ?
 				<BR />
-				Easy! We can find the handler who takes care of it in the code, in the KSU handlers section where it says: <B><I>"delegate.singleUploadCompleteHandler"</I></B> & <B><I>"delegate.allUploadsCompleteHandler"</I></B>
+				Easy! We can find the handler who takes care of it in the code, in the VSU handlers section where it says: <B><I>"delegate.singleUploadCompleteHandler"</I></B> & <B><I>"delegate.allUploadsCompleteHandler"</I></B>
 			</TD>
 		</TR>
 	</TABLE>
@@ -109,17 +109,17 @@
 		</TR>
 		<TR>
 			<TD CLASS="Info">
-				Now, let's click on the <B><I>"Step 3 - Add entries"</I></B> button to add the uploaded files as entries in our KMC.
+				Now, let's click on the <B><I>"Step 3 - Add entries"</I></B> button to add the uploaded files as entries in our VMC.
 				<BR /><BR />
-				Once clicked, the uploaded files are being set as entries in the KMC (<A CLASS="Link" HREF="http://www.kaltura.com/kmc" TARGET="_BLANK">http://www.kaltura.com/kmc</A>).
+				Once clicked, the uploaded files are being set as entries in the VMC (<A CLASS="Link" HREF="http://www.vidiun.com/vmc" TARGET="_BLANK">http://www.vidiun.com/vmc</A>).
 				<BR />
 				The function that start this procedure is called: <B><I>"addEntries()"</I></B>.
 				<BR /><BR />
 				Once the entries are added, we'll see a message in the results pane.
 				<BR />
-				How do we know that entries are successfully added to the KMC ?
+				How do we know that entries are successfully added to the VMC ?
 				<BR />
-				Easy! We can find the handler who takes care of it in the code, in the KSU handlers section where it says: <B><I>"delegate.entriesAddedHandler"</I></B>
+				Easy! We can find the handler who takes care of it in the code, in the VSU handlers section where it says: <B><I>"delegate.entriesAddedHandler"</I></B>
 				<BR /><BR />
 			</TD>
 		</TR>
@@ -151,9 +151,9 @@
 			<TD CLASS="Info">
 				That's it!
 				<BR /><BR />
-				We have now completed the upload process with the KSU.
+				We have now completed the upload process with the VSU.
 				<BR /><BR />
-				Best of luck implementing the KSU in your site.
+				Best of luck implementing the VSU in your site.
 			</TD>
 		</TR>
 	</TABLE>

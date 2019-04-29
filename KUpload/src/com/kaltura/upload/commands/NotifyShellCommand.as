@@ -1,7 +1,7 @@
-package com.kaltura.upload.commands
+package com.vidiun.upload.commands
 {
-	import com.kaltura.upload.controller.KUploadController;
-	import com.kaltura.upload.vo.FileVO;
+	import com.vidiun.upload.controller.VUploadController;
+	import com.vidiun.upload.vo.FileVO;
 	
 	import flash.external.ExternalInterface;
 	import flash.net.FileReference;
@@ -26,7 +26,7 @@ package com.kaltura.upload.commands
 			if(model.externalInterfaceEnable) {
 				ExternalInterface.call(fullExpression, _args);
 			}
-			KUploadController.getInstance().getApp().dispatchActionEvent(fullExpression, _args);
+			VUploadController.getInstance().getApp().dispatchActionEvent(fullExpression, _args);
 		}
 	}
 }

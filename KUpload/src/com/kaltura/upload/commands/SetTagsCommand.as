@@ -1,7 +1,7 @@
-package com.kaltura.upload.commands
+package com.vidiun.upload.commands
 {
-	import com.kaltura.upload.errors.KsuError;
-	import com.kaltura.upload.vo.FileVO;
+	import com.vidiun.upload.errors.VsuError;
+	import com.vidiun.upload.vo.FileVO;
 	
 	import flash.sampler.startSampling;
 
@@ -24,7 +24,7 @@ package com.kaltura.upload.commands
 			{
 				var fileVo:FileVO = model.files[i];
 				if (!fileVo)
-					throw new KsuError("Can not set tags, file with index " + i + " does not exist", KsuError.MISSING_FILE);
+					throw new VsuError("Can not set tags, file with index " + i + " does not exist", VsuError.MISSING_FILE);
 				fileVo.tags = _tags;
 			}
 		}

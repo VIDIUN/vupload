@@ -1,8 +1,8 @@
-package com.kaltura.upload.events
+package com.vidiun.upload.events
 {
 	import flash.events.Event;
 
-	public class KUploadEvent extends Event
+	public class VUploadEvent extends Event
 	{
 		public static const ERROR:String = "error";
 		public static const READY:String = "ready";
@@ -13,7 +13,7 @@ package com.kaltura.upload.events
 
 		public static const PROGRESS:String = "progress";
 
-		public function KUploadEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
+		public function VUploadEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
 		{
 			super(type, bubbles, cancelable);
 		}
