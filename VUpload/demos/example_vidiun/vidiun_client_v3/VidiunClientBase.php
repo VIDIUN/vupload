@@ -150,7 +150,7 @@ class VidiunClientBase
 	 */
 	private function signature($params)
 	{
-		vsort($params);
+		ksort($params);
 		$str = "";
 		foreach ($params as $k => $v)
 		{
